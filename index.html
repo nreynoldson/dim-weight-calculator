@@ -1,0 +1,126 @@
+<div class="dim-calculator">
+    <h3>Dimensional Shipping Weight Calculator</h3>
+
+    <div id="inputs">
+        <p>Enter measurements in inches.</p>
+        <div class="inputs">
+            <label for="length">Length:</label>
+            <input id="length" type="number">
+ 
+            <label for="width">Width:</label>
+            <input id="width" type="number">
+    
+            <label for="height">Height:</label>
+            <input id="height" type="number">
+        </div>
+    
+        <span id="error"></span>
+        <button id="calculate">Calculate</button>
+    </div>
+  
+    <div id="result" style="display: none;">
+        <span id="weight"></span>
+        <button id="recalculate">Recalculate</button>
+    </div> 
+</div>
+
+
+<script>
+var style = document.createElement('style');
+style.innerHTML = `
+.dim-calculator {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #444;
+  width: 250px;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.dim-calculator h3{
+  text-align:center;
+  margin-bottom: 5px;
+}
+
+.dim-calculator p{
+  font-size: 12px;
+}
+
+#calculate, #recalculate {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  text-transform: uppercase;
+  font-size: 14px;
+  width: auto;
+  padding: 10px;
+  border-radius: 5px
+}
+
+.dim-calculator .dimension {
+  margin: 10px;
+}
+
+.dim-calculator input{
+  width: 80px;
+  margin-bottom:10px;
+}
+
+.dim-calculator .inputs{
+  display: grid;
+  width: 220px;
+  grid-template-columns: 1fr 3fr;
+}
+
+.dim-calculator #error{
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.dim-calculator #result{
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.dim-calculator #recalculate{
+  margin-top: 10px;
+}
+`
+document.head.appendChild(style);
+
+document.getElementById("calculate").addEventListener("click", calculate);
+document.getElementById("recalculate").addEventListener("click", recalculate);
+
+var length = document.getElementById("length"),
+  	width = document.getElementById("width"),
+    height = document.getElementById("height"),
+    inputs = document.getElementById("inputs"),
+    result = document.getElementById("result"),
+    weight = document.getElementById("weight");
+    var error = document.getElementById("error");
+
+function calculate(){  
+  if(length.value == "" || width.value == "" || height.value == ""){
+  	error.style.display = "block";
+    error.innerHTML = "Enter dimensions to the nearest whole number (in.)";
+  }
+  else{
+  	error.style.display = "none";
+  	var value = Math.ceil((length.value * width.value * height.value)/139);
+    inputs.style.display = "none";
+    weight.innerHTML = "Dimensional Weight: " + value + "lbs.";
+    result.style.display = "block";
+  }
+  
+}
+
+function recalculate(){  
+    inputs.style.display = "block";
+    result.style.display = "none";
+    length.value = width.value = height.value = '';
+}
+
+</script>
